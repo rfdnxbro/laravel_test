@@ -28,5 +28,18 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
+  el: '#app',
+  data: {
+    posts: []
+  },
+  methods: {
+    fetchPosts: function(){
+      axios.get('/api/posts').then((res)=>{
+        this.posts = res.data
+      })
+    }
+  },
+  created() {
+    this.fetchPosts()
+  },
 });

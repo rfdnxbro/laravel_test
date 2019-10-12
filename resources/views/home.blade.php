@@ -14,7 +14,23 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    @{{ posts.total }}件
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th>ID</th>
+                            <th>タイトル</th>
+                            <th>本文</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="post in posts.data" v-bind:key="post.id" v-cloak>
+                                <td>@{{ post.id }}</td>
+                                <td>@{{ post.title }}</td>
+                                <td>@{{ post.content }}</td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

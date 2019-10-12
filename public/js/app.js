@@ -49357,7 +49357,22 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  */
 
 var app = new Vue({
-  el: '#app'
+  el: '#app',
+  data: {
+    posts: []
+  },
+  methods: {
+    fetchPosts: function fetchPosts() {
+      var _this = this;
+
+      axios.get('/api/posts').then(function (res) {
+        _this.posts = res.data;
+      });
+    }
+  },
+  created: function created() {
+    this.fetchPosts();
+  }
 });
 
 /***/ }),
