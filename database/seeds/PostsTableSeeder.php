@@ -11,9 +11,6 @@ class PostsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('posts')->insert([
-            'title' => 'hoge',
-            'content' => 'fuga',
-        ]);
+        $posts = factory(App\Post::class, 3)->create();
     }
 }
