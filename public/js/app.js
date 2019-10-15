@@ -49359,7 +49359,10 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app',
   data: {
-    posts: []
+    posts: [],
+    title: '',
+    content: '',
+    errors: {}
   },
   methods: {
     fetchPosts: function fetchPosts() {
@@ -49367,6 +49370,25 @@ var app = new Vue({
 
       axios.get('/api/posts').then(function (res) {
         _this.posts = res.data;
+      });
+    },
+    onSubmit: function onSubmit() {
+      var _this2 = this;
+
+      var params = {
+        title: this.title,
+        content: this.content
+      };
+      this.errors = {};
+      axios.post('/api/posts', params).then(function (res) {
+        _this2.title = '';
+        _this2.content = '';
+
+        _this2.fetchPosts();
+      })["catch"](function (err) {
+        for (var key in err.response.data.errors) {
+          _this2.$set(_this2.errors, key, err.response.data.errors[key].join('<br>'));
+        }
       });
     }
   },

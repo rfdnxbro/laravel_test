@@ -14,6 +14,22 @@
                         </div>
                     @endif
 
+                    <form>
+                        <div class="form-group">
+                            <label for="title">タイトル</label>
+                            <input type="text" id="title" v-model="title" class="form-control" v-bind:class="{ 'is-invalid': errors.title }">
+                            <p class="alert alert-danger" v-if="errors.title" v-html="errors.title"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">本文</label>
+                            <textarea v-model="content" id="content" class="form-control" v-bind:class="{ 'is-invalid': errors.content }"></textarea>
+                            <p class="alert alert-danger" v-if="errors.content" v-html="errors.content"></p>
+                        </div>
+                        <input type="button" class="btn btn-primary center" @click="onSubmit()" value="投稿">
+                    </form>
+                    <br>
+
+
                     @{{ posts.total }}件
                     <table class="table">
                         <thead>

@@ -30,13 +30,32 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
   el: '#app',
   data: {
-    posts: []
+    posts: [],
+    title: '',
+    content: '',
+    errors: {},
   },
   methods: {
     fetchPosts: function(){
       axios.get('/api/posts').then((res)=>{
         this.posts = res.data
       })
+    },
+    onSubmit: function(){
+      const params = {
+        title: this.title,
+        content: this.content,
+      };
+      this.errors = {};
+      axios.post('/api/posts', params).then(res =>{
+        this.title = '';
+        this.content = '';
+        this.fetchPosts();
+      }).catch(err =>{
+        for(var key in err.response.data.errors) {
+            this.$set(this.errors, key, err.response.data.errors[key].join('<br>'));
+        }
+      });
     }
   },
   created() {
