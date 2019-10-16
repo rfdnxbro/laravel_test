@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        //$this->middleware('auth')->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +34,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
         ]);
-        return Post::create($request->all());
+        $user = \App\User::find(1);
+        return $user->posts()->create($request->all());
     }
 
     /**
