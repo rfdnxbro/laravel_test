@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function __construct()
-    {
-        //$this->middleware('auth')->except('index');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::latest()->paginate();
+        return Post::with('user')->latest()->paginate();
     }
 
     /**
@@ -34,8 +29,7 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
         ]);
-        $user = \App\User::find(1);
-        return $user->posts()->create($request->all());
+        return $request->user()->posts()->create($request->all());
     }
 
     /**

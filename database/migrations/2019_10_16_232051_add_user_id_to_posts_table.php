@@ -33,9 +33,7 @@ class AddUserIdToPostsTable extends Migration
     {
         Schema::table('posts', function (Blueprint $table) {
             //
-            $table->dropForeign('user_id')
-                  ->reference('id')
-                  ->on('users');
+            $table->dropForeign('posts_user_id_foreign');
 
             $table->dropColumn('user_id');
         });

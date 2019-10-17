@@ -35,6 +35,7 @@
                         <thead>
                             <tr>
                             <th>ID</th>
+                            <th>投稿者</th>
                             <th>タイトル</th>
                             <th>本文</th>
                             </tr>
@@ -42,6 +43,7 @@
                         <tbody>
                             <tr v-for="post in posts.data" v-bind:key="post.id" v-cloak>
                                 <td>@{{ post.id }}</td>
+                                <td>@{{ post.user.name }}</td>
                                 <td>@{{ post.title }}</td>
                                 <td>@{{ post.content }}</td></td>
                             </tr>

@@ -34,10 +34,11 @@ const app = new Vue({
     title: '',
     content: '',
     errors: {},
+    api_token: document.getElementsByName('api_token')[0].content,
   },
   methods: {
     fetchPosts: function(){
-      axios.get('/api/posts').then((res)=>{
+      axios.get('/api/posts?api_token=' + this.api_token).then((res)=>{
         this.posts = res.data
       })
     },
@@ -45,6 +46,7 @@ const app = new Vue({
       const params = {
         title: this.title,
         content: this.content,
+        api_token: this.api_token,
       };
       this.errors = {};
       axios.post('/api/posts', params).then(res =>{

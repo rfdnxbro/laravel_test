@@ -49362,13 +49362,14 @@ var app = new Vue({
     posts: [],
     title: '',
     content: '',
-    errors: {}
+    errors: {},
+    api_token: document.getElementsByName('api_token')[0].content
   },
   methods: {
     fetchPosts: function fetchPosts() {
       var _this = this;
 
-      axios.get('/api/posts').then(function (res) {
+      axios.get('/api/posts?api_token=' + this.api_token).then(function (res) {
         _this.posts = res.data;
       });
     },
@@ -49377,7 +49378,8 @@ var app = new Vue({
 
       var params = {
         title: this.title,
-        content: this.content
+        content: this.content,
+        api_token: this.api_token
       };
       this.errors = {};
       axios.post('/api/posts', params).then(function (res) {
