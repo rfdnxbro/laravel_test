@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\Mail\PostSent;
+use Illuminate\Support\Facades\Mail;
+
 
 class PostController extends Controller
 {
@@ -29,7 +32,9 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
         ]);
-        return $request->user()->posts()->create($request->all());
+        $post = $request->user()->posts()->create($request->all());
+        Mail::to($request->user())->send(new PostSent($post));
+        return $post;
     }
 
     /**
