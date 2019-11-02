@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\User;
 use Illuminate\Console\Command;
+use App\Mail\ServiceNotice;
+use Illuminate\Support\Facades\Mail;
 
 class SendEmails extends Command
 {
@@ -11,14 +14,14 @@ class SendEmails extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'email:send {user : ユーザーIDを指定}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '指定ユーザーにメールを配信する';
 
     /**
      * Create a new command instance.
@@ -37,6 +40,9 @@ class SendEmails extends Command
      */
     public function handle()
     {
-        //
+        $user = User::find($this->argument('user'));
+        if ($this->confirm($user->name . 'さん[' . $user->email . ']にメールを配信しますか？')) {
+            Mail::to($user)->send(new ServiceNotice($user));
+        }
     }
 }
