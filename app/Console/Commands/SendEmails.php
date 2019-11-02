@@ -14,7 +14,7 @@ class SendEmails extends Command
      *
      * @var string
      */
-    protected $signature = 'email:send {user : ユーザーIDを指定}';
+    protected $signature = 'email:send {user : ユーザーIDを指定} {--f : 確認を挟まず送信する}';
 
     /**
      * The console command description.
@@ -41,7 +41,7 @@ class SendEmails extends Command
     public function handle()
     {
         $user = User::find($this->argument('user'));
-        if ($this->confirm($user->name . 'さん[' . $user->email . ']にメールを配信しますか？')) {
+        if ($this->option('f') || $this->confirm($user->name . 'さん[' . $user->email . ']にメールを配信しますか？')) {
             Mail::to($user)->send(new ServiceNotice($user));
         }
     }
